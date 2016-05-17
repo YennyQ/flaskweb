@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
 from flask import render_template, session, redirect, url_for
 
@@ -5,7 +6,9 @@ from . import main
 from .forms import NameForm
 from .. import db
 from ..models import User
-
+from manage import app
+# -*- coding: utf-8 -*-
+from ..email import send_email
 
 @main.route('/', methods = ['GET', 'POST'])
 def index():

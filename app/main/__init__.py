@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Blueprint
 
 # 蓝本构造函数需传入两个指定参数，蓝本名和蓝本所在模块
