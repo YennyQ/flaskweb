@@ -1,0 +1,13 @@
+Dear  {{ user.username  }},
+
+欢迎来到【萌宠皮卡丘】的小窝！
+
+请点击下面的链接确认您的账户：
+
+{{ url_for('auth.confirm', token=token, _external=True)  }}
+
+来自，
+
+【萌宠皮卡丘】的萌主
+
+提示: 请勿回复此邮件。
