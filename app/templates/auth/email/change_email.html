@@ -1,0 +1,7 @@
+<p>Dear {{ user.username }},</p>
+<p>请点击下面的链接确认您的新邮箱地址： <a href="{{ url_for('auth.change_email', token=token, _external=True) }}">点击此处
+<p>或者，您也可以将下面链接复制至您的浏览器地址栏：</p>
+<p>{{ url_for('auth.change_email', token=token, _external=True) }}</p>
+<p>来自,</p>
+<p>【萌宠皮卡丘】的萌主</p>
+<p><small>提示: 请勿回复此邮件。</small></p>

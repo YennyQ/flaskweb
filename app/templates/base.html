@@ -53,6 +53,29 @@
             	</div>
             	<button type="button" class="btn btn-default">搜索</button>
         	</form>
+        	<ul class="nav navbar-nav navbar-right">
+        		{% if current_user.is_authenticated %}
+        		<li class="dropdown">
+                	<a href="/" class="dropdown-toggle" data-toggle="dropdown">我的账户<b class="caret"></b>
+                	</a>
+                	<!--dropdowen menu下拉菜单选项-->
+                	<ul class="dropdown-menu">
+                		<li><a href="/">1</a></li>
+                		<li>
+                			<a href="{{ url_for('auth.change_email_request') }}">更换邮箱地址</a>
+                		</li>
+                		<li>
+                			<a href="{{  url_for('auth.change_password')  }}">修改密码</a>
+                		</li>
+						<li>
+							<a href="{{ url_for('auth.logout') }}">登出</a>
+						</li>	
+                	</ul>
+                </li>
+				{% else %}
+				<li><a href="{{ url_for('auth.login') }}">登入</a></li>
+				{% endif %}
+			</ul>
 		</div>
 	</div>
 </div>
