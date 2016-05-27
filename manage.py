@@ -26,7 +26,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def test(coverage=False):
-	"""运行单元测试"""
+	"""Run the unit tests."""
 	if coverage and not os.environ.get('FLASK_COVERAGE'):
 		import sys
 		os.environ['FLASK_COVERAGE'] = '1'
@@ -47,7 +47,7 @@ def test(coverage=False):
 
 @manager.command
 def profile(length=25, profile_dir=None):
-	"""在请求分析器下运行程序"""
+	"""Start the application under the code profiler."""
 	from werkzeug.contrib.profiler import ProfilerMiddleware
 	app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length],
 		profile_dir=profile_dir)
@@ -55,7 +55,7 @@ def profile(length=25, profile_dir=None):
 
 @manager.command
 def deploy():
-	"""运行部署任务"""
+	"""Run deployment tasks."""
 	from flask.ext.migrate import upgrade
 	from app.models import Role, User
 
