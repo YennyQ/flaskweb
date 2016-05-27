@@ -6,17 +6,14 @@ if os.environ.get('FLASK_COVERAGE'):
 	COV = coverage.coverage(branch=True, include='app/*')
 	COV.start()
 
-
 from app import create_app, db
 from app.models import User, Role, Post, Follow, Permission, Comment
 from flask.ext.script import Manager, Shell
 from flask.ext.migrate import Migrate, MigrateCommand
 
-
 app = create_app(os.getenv('Flask_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db) 
-
 
 #app，db，表，集成到Python Shell
 def make_shell_context():
