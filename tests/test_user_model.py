@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest, time
 from datetime import datetime
 from app.models import User, Role, AnonymousUser, Permission, Follow
