@@ -48,8 +48,8 @@ class EditProfileAdminForm(BaseForm):
 			raise ValidationError(u'用户名已存在。')
 
 class PostForm(BaseForm):
-	body = PageDownField(u"说点儿什么？", validators=[Required()])
-	submit = SubmitField(u'提交')
+	body = PageDownField(u'说点什么？', validators=[Required()])
+	submit = SubmitField(u'发布')
 
 class CommentForm(BaseForm):
 	body = PageDownField('', validators=[Required()])

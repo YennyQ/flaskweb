@@ -1,7 +1,7 @@
 {% extends "bootstrap/base.html" %}
 
 
-{% block title %}萌宠皮卡丘{% endblock %}
+{% block title %}Flasky{% endblock %}
 
 
 {% block head %}
@@ -25,23 +25,20 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">萌宠皮卡丘</a>
+			<a class="navbar-brand" href="/">Flasky</a>
 		</div>
 		<!--collapse定义导航菜单-->
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="/">皮卡丘的主页</a></li>
-				<li><a href="/">皮卡丘的照片</a></li>
-				<li><a href="/">皮卡丘的说说</a></li>
-				<li><a href="/">皮卡丘的日志</a></li>
+				<li><a href="/">主页</a></li>
 			</ul>
 			<!--嵌套表单-->
-        	<form action="/" class="navbar-form navbar-left" role="search">
+        	<!-- <form action="/" class="navbar-form navbar-left" role="search">
             	<div class="form-group">
             	<input type="text" class="form-control"></input>
             	</div>
             	<button type="button" class="btn btn-default">搜索</button>
-        	</form>
+        	</form> -->
         	<ul class="nav navbar-nav navbar-right">
         		{% if current_user.can(Permission.MODERATE_COMMENTS) %}
         		<li><a href="{{ url_for('main.moderate') }}">管理评论</a></li>

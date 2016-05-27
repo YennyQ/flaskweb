@@ -58,10 +58,11 @@ def profile(length=25, profile_dir=None):
 @manager.command
 def deploy():
 	"""运行部署任务"""
-	from flask.ext.migrate import upgrade
+	from flask.ext.migrate import revision
 	from app.models import Role, User
 
-
+	revision()
+	
 	Role.insert_roles()
 
 	User.add_self_follows()

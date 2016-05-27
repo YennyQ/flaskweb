@@ -1,6 +1,6 @@
 Dear  {{ user.username  }},
 
-欢迎来到【萌宠皮卡丘】的小窝！
+欢迎来到Flasky！
 
 请点击下面的链接确认您的账户：
 
@@ -8,6 +8,6 @@ Dear  {{ user.username  }},
 
 来自，
 
-【萌宠皮卡丘】的萌主
+Flasky
 
 提示: 请勿回复此邮件。

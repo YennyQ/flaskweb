@@ -1,8 +1,8 @@
 <p>Dear {{ user.username }},</p>
-<p>欢迎来到 <b>【萌宠皮卡丘】的小窝</b>！</p>
+<p>欢迎来到 <b>Flasky</b>！</p>
 <p>请点击下面的链接确认您的账户： <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">点击此处</a>.</p>
 <p>或者，您也可以将下面链接复制至您的浏览器地址栏：</p>
 <p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
 <p>来自,</p>
-<p>【萌宠皮卡丘】的萌主</p>
+<p>Flasky</p>
 <p><small>提示: 请勿回复此邮件。</small></p>

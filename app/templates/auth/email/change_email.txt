@@ -6,6 +6,6 @@ Dear {{ user.username }},
 
 来自，
 
-【萌宠皮卡丘】的萌主
+Flasky
 
 提示: 请勿回复此邮件。
