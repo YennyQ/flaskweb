@@ -84,12 +84,15 @@ class User(UserMixin, db.Model):
 		if self.role is None:
 			if self.email == current_app.config['FLASKWEB_ADMIN']:
 				self.role = Role.query.filter_by(permissions=0xff).first()
+				
 			else:
 				self.role = Role.query.filter_by(default=True).first()
 		if self.email is not None and self.avatar_hash is None:
 			self.avatar_hash = hashlib.md5(
 				self.email.encode('utf-8')).hexdigest()
 		self.follow(self)
+		db.session.add(self)
+		db.session.commit()
 
 
 	def __repr__(self):
@@ -127,6 +130,8 @@ class User(UserMixin, db.Model):
 	@password.setter
 	def password(self, password):
 		self.password_hash = generate_password_hash(password)
+		db.session.add(self)
+		db.session.commit()
 
 	def verify_password(self, password):
 		return check_password_hash(self.password_hash, password)
@@ -216,11 +221,16 @@ class User(UserMixin, db.Model):
 		if not self.is_following(user):
 			f = Follow(followed=user)
 			self.followed.append(f)
+		db.session.add(self)
+		db.session.commit()
+
 
 	def unfollow(self, user):
 		f = self.followed.filter_by(followed_id=user.id).first()
 		if f:
 			self.followed.remove(f)
+		db.session.add(self)
+		db.session.commit()
 
 	def is_following(self, user):
 		return self.followed.filter_by(followed_id=user.id).first() is not None
@@ -238,8 +248,8 @@ class User(UserMixin, db.Model):
 		for user in User.query.all():
 			if not user.is_following(user):
 				user.follow(user)
-				db.session.add(user)
-				db.session.commit()
+		db.session.add(user)
+		db.session.commit()
 
 	def generate_auth_token(self, expiration):
 		s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
@@ -335,8 +345,8 @@ class Post(db.Model):
 			p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 3)),
 				timestamp=forgery_py.date.date(True),
 				author=u)
-			db.session.add(p)
-			db.session.commit()
+		db.session.add(p)
+		db.session.commit()
 
 	@staticmethod
 	def on_changed_body(target, value, oldvalue, initiator):
