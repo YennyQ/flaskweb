@@ -1,1 +1,1 @@
-web: app.wsgi_app
+web: python manage.py runserver
