@@ -42,7 +42,7 @@ def register():
 		db.session.add(user)
 		db.session.commit()
 		token = user.generate_confirmation_token()
-		send_email(user.email, u'确认你注册的【萌宠皮卡丘】的账户',
+		send_email(user.email, u'确认你注册的【Flasky】的账户',
 			'auth/email/confirm',user=user, token=token)
 		flash(u"确认邮件已经发至您的邮箱，请查看！")
 		return redirect(url_for('main.index'))
