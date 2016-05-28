@@ -96,6 +96,7 @@ def change_password():
 		if current_user.verify_password(form.old_password.data):
 			current_user.password = form.password.data
 			db.session.add(current_user)
+			db.session.commit()
 			flash(u'您的密码已经重置。')
 			return redirect(url_for('main.index'))
 		else:
