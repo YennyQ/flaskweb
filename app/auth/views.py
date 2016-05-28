@@ -82,7 +82,7 @@ def unconfirmed():
 @login_required
 def resend_confirmation():
 	token = current_user.generate_confirmation_token()
-	send_email(current_user.email, u'确认你注册的【萌宠皮卡丘】的账户',
+	send_email(current_user.email, u'确认你注册的【Flasky】的账户',
 		'auth/email/confirm',user=current_user, token=token)
 	flash(u"确认邮件已经发至您的邮箱，请查看！")
 	return redirect(url_for('main.index'))
