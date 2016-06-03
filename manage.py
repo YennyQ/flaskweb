@@ -9,6 +9,7 @@ if os.environ.get('FLASK_COVERAGE'):
 
 from app import create_app, db
 from app.models import User, Role, Post, Follow, Permission, Comment
+from app.models import Category, Tag
 from flask.ext.script import Manager, Shell
 from flask.ext.migrate import Migrate, MigrateCommand
 
@@ -19,7 +20,8 @@ migrate = Migrate(app, db)
 #app，db，表，集成到Python Shell
 def make_shell_context():
 	return dict(app=app, db=db, User=User, Role=Role, Post=Post,
-		Follow=Follow, Permission=Permission, Comment=Comment)
+		Follow=Follow, Permission=Permission, Comment=Comment, 
+		Category=Category, Tag=Tag)
 manager.add_command("shell", Shell(make_context = make_shell_context))
 manager.add_command('db', MigrateCommand)
 
@@ -66,7 +68,11 @@ def deploy():
 	
 	Role.insert_roles()
 
+	Role.admin_update()
+
 	User.add_self_follows()
+
+	Category.create_categories()
 
 
 if __name__ == '__main__':

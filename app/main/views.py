@@ -8,19 +8,11 @@ from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm
 from .. import db
 from ..models import Role, User, Permission, Post, Follow, Comment
+from ..models import Category, post_tag_ref
 from ..decorators import admin_required, permission_required
-
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-	form = PostForm()
-	if current_user.can(Permission.WRITE_ARTICLES) and \
-	form.validate_on_submit():
-		post = Post(body=form.body.data, 
-			author=current_user._get_current_object())
-		db.session.add(post)
-		db.session.commit()
-		return redirect(url_for('.index'))
 	show_followed = False
 	if current_user.is_authenticated:
 		show_followed = bool(request.cookies.get('show_followed', ''))
@@ -107,6 +99,50 @@ def edit_profile_admin(id):
 	form.about_me.data = user.about_me
 	return render_template('edit_profile.html', form=form, user=user)
 
+
+@main.route('/add_post', methods=['GET', 'POST'])
+@login_required
+def add_post():
+	form = PostForm()
+	if form.validate_on_submit():
+		post = Post(title=form.title.data, body=form.body.data, 
+			author=current_user._get_current_object())
+		post.tags = form.tags.data
+		post.category = Category.query.get(form.category.data)
+		db.session.add(post)
+		db.session.commit()
+		flash(u'您的文章已发表。')
+		return redirect(url_for('.post', id=post.id))
+	return render_template('add_post.html', form=form, title=u'添加文章')
+
+@main.route('/edit_post/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_post(id):
+	post = Post.query.get_or_404(id)
+	if current_user != post.author and \
+	not current_user.can(Permission.ADMINISTER):
+		abort(403)
+	form = PostForm()
+	if form.validate_on_submit():
+		post.title = form.title.data
+		post.body = form.body.data
+		post.category = Category.query.get(form.category.data)
+		for tag in post.tags.all():
+			post.tags.remove(tag)
+		for tag in form.tags.data:
+			post.tags.append(tag)
+		db.session.add(post)
+		db.session.commit()
+		flash(u'文章已更新。')
+		return redirect(url_for('.post', id=post.id))
+	form.title.data = post.title
+	form.body.data = post.body
+	form.tags.data = post.tags.all()
+	form.category.data = post.category_id
+	return render_template('add_post.html', form=form, title=u'编辑文章')
+
+
+
 @main.route('/post/<int:id>', methods=['GET', 'POST'])
 def post(id):
 	post = Post.query.get_or_404(id)
@@ -129,22 +165,8 @@ def post(id):
 	return render_template('post.html', posts=[post], comments=comments,
 		form=form, pagination=pagination)
 
-@main.route('/edit/<int:id>', methods=['GET', 'POST'])
-@login_required
-def edit(id):
-	post = Post.query.get_or_404(id)
-	if current_user != post.author and \
-	not current_user.can(Permission.ADMINISTER):
-		abort(403)
-	form = PostForm()
-	if form.validate_on_submit():
-		post.body = form.body.data
-		db.session.add(post)
-		db.session.commit()
-		flash(u'文章已被更新。')
-		return redirect(url_for('.post', id=post.id))
-	form.body.data = post.body
-	return render_template('edit_post.html', form=form)
+
+
 
 @main.route('/follow/<username>')
 @login_required
@@ -241,6 +263,8 @@ def moderate_disable(id):
 	db.session.commit()
 	return redirect(url_for('.moderate',
 		page=request.args.get('page', 1, type=int)))
+
+
 
 
 @main.route('/shutdown')

@@ -107,6 +107,7 @@ class User(UserMixin, db.Model):
 	def is_administrator(self):
 		return self.can(Permission.ADMINISTER)
 
+
 	def ping(self):
 		self.last_seen = datetime.utcnow()
 		db.session.add(self)
@@ -248,8 +249,8 @@ class User(UserMixin, db.Model):
 		for user in User.query.all():
 			if not user.is_following(user):
 				user.follow(user)
-		db.session.add(user)
-		db.session.commit()
+			db.session.add(user)
+			db.session.commit()
 
 	def generate_auth_token(self, expiration):
 		s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
@@ -263,6 +264,14 @@ class User(UserMixin, db.Model):
 		except:
 			return None
 		return User.query.get(data['id'])
+
+	@staticmethod
+	def admin_update():
+		for user in User.query.all():
+			if user.email == current_app.config['FLASKWEB_ADMIN']:
+				user.role = Role.query.filter_by(permissions=0xff).first()
+				db.session.add(user)
+				db.session.commit()
 
 	def to_json(self):
 		json_user = {
@@ -299,11 +308,57 @@ def load_user(user_id):
 	return User.query.get(int(user_id))
 
 
+class Category(db.Model):
+	__tablename__ = 'categories'
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(128), unique=True)
+	posts = db.relationship('Post', backref='category', lazy='dynamic')
+
+	@staticmethod
+	def create_categories():
+		ctgs = [u'编程语言', u'Web开发', u'算法学习',
+		 u'硬件学习', u'Linux学习']
+		for c in ctgs:
+			ctg = Category.query.filter_by(name=c).first()
+			if ctg is None:
+				ctg = Category(name=c)
+			db.session.add(ctg)
+			db.session.commit()
+
+
+class Tag(db.Model):
+	__tablename__ = 'tags'
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(128), unique=True)
+
+
+	@staticmethod
+	def create_tags():
+		ts = [u'Python', u'C语言', u'C++', u'flask',
+		u'http', u'Linux']
+		for t in ts:
+			tag = Tag.query.filter_by(name=t).first()
+			if tag is None:
+				tag = Tag(name=t)
+			db.session.add(tag)
+			db.session.commit()
+
+
+post_tag_ref = db.Table('post_tag_ref',
+	db.Column('post_id', db.Integer, db.ForeignKey('posts.id')),
+	db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'))
+	)
+
 class Post(db.Model):
 	__tablename__ = 'posts'
 	id = db.Column(db.Integer, primary_key=True)
+	title = db.Column(db.String(128), unique=True, index=True)
 	body = db.Column(db.Text)
 	body_html = db.Column(db.Text)
+	category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+	tags = db.relationship('Tag', secondary=post_tag_ref, 
+		backref=db.backref('post', lazy='dynamic'), lazy='dynamic')
+
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	
@@ -314,6 +369,7 @@ class Post(db.Model):
 	def to_json(self):
 		json_post = {
 			'url': url_for('api.get_post', id=self.id, _external=True),
+			'title': self.title,
 			'body': self.body,
 			'body_html': self.body_html,
 			'timestamp': self.timestamp,
@@ -335,29 +391,48 @@ class Post(db.Model):
 
 	@staticmethod
 	def generate_fake(count=100):
+		from sqlalchemy.exc import IntegrityError
 		from random import seed, randint
 		import forgery_py
 
 		seed()
 		user_count = User.query.count()
+		category_count = Category.query.count()
+		tags_count = Tag.query.count()
 		for i in range(count):
 			u = User.query.offset(randint(0, user_count - 1)).first()
-			p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 3)),
+			c = Category.query.offset(randint(0, category_count -1)).first()
+			t = Tag.query.offset(randint(0, tags_count - 1)).first()
+			p = Post(title=forgery_py.lorem_ipsum.word(),
+				category=c,
+				tags=[t],
+				body=forgery_py.lorem_ipsum.sentences(randint(1, 3)),
 				timestamp=forgery_py.date.date(True),
 				author=u)
-		db.session.add(p)
-		db.session.commit()
+			db.session.add(p)
+			try:
+				db.session.commit()
+			except IntegrityError:
+				db.session.rollback()
 
 	@staticmethod
 	def on_changed_body(target, value, oldvalue, initiator):
 		allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote',
 		'code', 'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul', 'h1',
-		'h2', 'h3', 'p']
+		'h2', 'h3', 'p', 'img']
+		attrs = {
+			'*':['class'],
+			'a':['href', 'rel'],
+			'img':['src', 'alt']
+		}
 		target.body_html = bleach.linkify(bleach.clean(
 			markdown(value, output_format='html'),
-			tags=allowed_tags, strip=True))
+			tags=allowed_tags, 
+			attributes=attrs,
+			strip=True))
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
+
 
 class Comment(db.Model):
 	__tablename__ = 'comments'

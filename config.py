@@ -53,7 +53,7 @@ class ProductionConfig(Config):
 				mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
 				fromaddr=cls.MAIL_SENDER,
 				toaddrs=[cls.FLASKWEB_ADMIN],
-				subject=cls.MAIL_SUBJECT_PREFIX + 'application error',
+				subject=cls.MAIL_SUBJECT_PREFIX + u'应用错误',
 				credentials=credentials,
 				secure=secure)
 			mail_handler.setLevel(logging.ERROR)

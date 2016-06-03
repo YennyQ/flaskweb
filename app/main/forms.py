@@ -2,10 +2,12 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField, TextAreaField 
 from wtforms import BooleanField, SelectField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import Required, Length, Email, Regexp
 from wtforms import ValidationError
 from flask.ext.pagedown.fields import PageDownField
-from ..models import Role, User
+from ..models import Role, User, Category
+from ..extform import TagListField
 
 class BaseForm(Form):
 	LANGUAGES = ['zh']
@@ -48,9 +50,19 @@ class EditProfileAdminForm(BaseForm):
 		User.query.filter_by(username=field.data).first():
 			raise ValidationError(u'用户名已存在。')
 
+
 class PostForm(BaseForm):
-	body = PageDownField(u'说点什么？', validators=[Required()])
+	title = StringField(u'标题', validators=[Required()])
+	category = SelectField(u'分类', coerce=int)
+	tags = TagListField(u'标签', validators=[Required()])
+	body = TextAreaField(u'正文', validators=[Required()])
 	submit = SubmitField(u'发布')
+
+	def __init__(self, *args, **kwargs):
+		super(PostForm, self).__init__(*args, **kwargs)
+		self.category.choices = [(category.id, category.name) 
+		for category in Category.query.order_by(Category.name).all()]
+
 
 class CommentForm(BaseForm):
 	body = PageDownField('', validators=[Required()])
