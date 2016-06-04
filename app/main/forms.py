@@ -46,7 +46,7 @@ class EditProfileAdminForm(BaseForm):
 			raise ValidationError(u'该邮箱已被注册。')
 
 	def validate_username(self, field):
-		if field.data != self.username and \
+		if field.data != self.user.username and \
 		User.query.filter_by(username=field.data).first():
 			raise ValidationError(u'用户名已存在。')
 

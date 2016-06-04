@@ -13,9 +13,9 @@ class Config:
 	MAIL_USE_SSL = True
 	MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-	FOLLOWERS_PER_PAGE = 10
-	POSTS_PER_PAGE = 10
-	COMMENTS_PER_PAGE = 10
+	FOLLOWERS_PER_PAGE = 15
+	POSTS_PER_PAGE = 15
+	COMMENTS_PER_PAGE = 15
 	SQLALCHEMY_RECORD_QUERIES = True
 	SLOW_DB_QUERY_TIME = 0.5
 	SSL_DISABLE = True
@@ -36,7 +36,7 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-
+	
 	@classmethod
 	def init_app(cls, app):
 		Config.init_app(app)

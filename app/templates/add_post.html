@@ -11,7 +11,7 @@
 	<form action="" method="post" class="form" role="form">
 		{{ form.hidden_tag() }}
 		<div class="form-group required">
-			{{ form.title(id="title", class="form-control", placeholder=form.title.label.text) }}
+			{{ form.title(id="title", class="form-control input-lg", placeholder=form.title.label.text) }}
 		</div>
 		<div class="form-group">
 			<div class="row">
@@ -20,7 +20,7 @@
 					class="form-control", placeholder=form.category.label.text) }}
 				</div>
 				<div class="col-md-6">
-					{{ form.tags(type="text", class="form-control", id="tokenfield", value="python,bb,hh", placeholder=form.tags.label.text) }}
+					{{ form.tags(type="text", class="form-control", id="tokenfield", placeholder=form.tags.label.text) }}
 				</div>
 			</div>
 		</div>
@@ -28,7 +28,7 @@
 				{{ form.body(placeholder=form.body.label.text) }}
 		</div>
 		<div class="form-group">
-			{{ form.submit(class="btn btn-default")}}
+			{{ form.submit(class="btn btn-primary")}}
 		</div>
 	</form>
 </div>

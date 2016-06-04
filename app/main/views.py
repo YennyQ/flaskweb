@@ -4,6 +4,7 @@ from flask import current_app, request, make_response
 from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm
 from .. import db
@@ -25,7 +26,7 @@ def index():
 		page, per_page=current_app.config['POSTS_PER_PAGE'],
 		error_out=False)
 	posts = pagination.items
-	return render_template('index.html', form=form, posts=posts, 
+	return render_template('index.html', posts=posts, 
 		show_followed=show_followed, pagination=pagination)
 
 @main.route('/all')
@@ -44,9 +45,7 @@ def show_followed():
 
 @main.route('/user/<username>')
 def user(username):
-	user = User.query.filter_by(username=username).first()
-	if user is None:
-		abort(404)
+	user = User.query.filter_by(username=username).first_or_404()
 	page = request.args.get('page', 1, type=int)
 	pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
 		page, per_page=current_app.config['POSTS_PER_PAGE'],
@@ -110,7 +109,10 @@ def add_post():
 		post.tags = form.tags.data
 		post.category = Category.query.get(form.category.data)
 		db.session.add(post)
-		db.session.commit()
+		try:
+			db.session.commit()
+		except IntegrityError:
+			db.session.rollback()
 		flash(u'您的文章已发表。')
 		return redirect(url_for('.post', id=post.id))
 	return render_template('add_post.html', form=form, title=u'添加文章')
@@ -162,7 +164,7 @@ def post(id):
 		page, per_page=current_app.config['COMMENTS_PER_PAGE'],
 		error_out=False)
 	comments = pagination.items
-	return render_template('post.html', posts=[post], comments=comments,
+	return render_template('post.html', post=post, comments=comments,
 		form=form, pagination=pagination)
 
 
