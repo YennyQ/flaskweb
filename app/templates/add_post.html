@@ -5,7 +5,7 @@
 
 {% block page_content %}
 <div class="page-header">
-	<h1>{{ title }}</h1>
+	<h2>{{ title }}</h2>
 </div>
 <div class="add_post">
 	<form action="" method="post" class="form" role="form">
@@ -37,25 +37,13 @@
 {% block scripts %}
 {{ super() }}
 <link rel="stylesheet" href="http://lab.lepture.com/editor/editor.css" />
-<script type="text/javascript" src="http://lab.lepture.com/editor/editor.js"></script>
-<script type="text/javascript" src="http://lab.lepture.com/editor/marked.js"></script>
-<script type="text/javascript">
-	var editor = new Editor();
-	editor.render();
-</script>
+<script src="http://lab.lepture.com/editor/editor.js"></script>
+<script src="http://lab.lepture.com/editor/marked.js"></script>
+
 
 <link href="/static/tokenfield/tokenfield-typeahead.css" rel="stylesheet"/>
 <link href="/static/tokenfield/bootstrap-tokenfield.css" rel="stylesheet">
 <script src="/static/tokenfield/bootstrap-tokenfield.js"></script>
 
-
-<script type="text/javascript">
-	$('#tokenfield').tokenfield({
-  autocomplete: {
-    source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
-    delay: 100
-  },
-  showAutocompleteOnFocus: true
-})
-</script>
+<script src="/static/integrate.js"></script>
 {% endblock %}

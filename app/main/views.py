@@ -12,6 +12,28 @@ from ..models import Role, User, Permission, Post, Follow, Comment
 from ..models import Category, post_tag_ref
 from ..decorators import admin_required, permission_required
 
+
+@main.route('/shutdown')
+def server_shutdown():
+	if not current_app.testing:
+		abort(404)
+	shutdown = request.environ.get('werkzeug.server.shutdown')
+	if not shutdown:
+		abort(500)
+	shutdown()
+	return "Shutting down..."
+
+@main.after_app_request
+def after_request(response):
+	for query in get_debug_queries():
+		if query.duration >= current_app.config['SLOW_DB_QUERY_TIME']:
+			current_app.logger.warning(
+				'Slow query: %s\nParameters: %s\nDuration: %f\nContext: %s\n' 
+				% (query.statement, query.parameters, query.duration, 
+					query.context))
+	return response
+
+
 @main.route('/', methods=['GET', 'POST'])
 def index():
 	show_followed = False
@@ -169,7 +191,6 @@ def post(id):
 
 
 
-
 @main.route('/follow/<username>')
 @login_required
 @permission_required(Permission.FOLLOW)
@@ -232,60 +253,31 @@ def followed_by(username):
 		title="我关注的人", endpoint='.followed_by',
 		pagination=pagination, follows=follows)
 
-@main.route('/moderate')
-@login_required
-@permission_required(Permission.MODERATE_COMMENTS)
-def moderate():
-	page = request.args.get('page', 1, type=int)
-	pagination = Comment.query.order_by(Comment.timestamp.desc()).paginate(
-		page, per_page=current_app.config['COMMENTS_PER_PAGE'],
-		error_out=False)
-	comments = pagination.items
-	return render_template('moderate.html', comments=comments,
-		pagination=pagination, page=page)
 
-@main.route('/moderate/enable/<int:id>')
+@main.route('/post/<int:post_id>/enable/<int:comment_id>')
 @login_required
 @permission_required(Permission.MODERATE_COMMENTS)
-def moderate_enable(id):
-	comment = Comment.query.get_or_404(id)
+def comment_enable(post_id, comment_id):
+	comment = Comment.query.get_or_404(comment_id)
 	comment.disabled = False
 	db.session.add(comment)
 	db.session.commit()
-	return redirect(url_for('.moderate', 
-		page=request.args.get('page', 1, type=int)))
+	return redirect(url_for('.post', id=post_id))
 
-@main.route('/moderate/disable/<int:id>')
+@main.route('/post/<int:post_id>/disable/<int:comment_id>')
 @login_required
 @permission_required(Permission.MODERATE_COMMENTS)
-def moderate_disable(id):
-	comment = Comment.query.get_or_404(id)
+def comment_disable(post_id, comment_id):
+	comment = Comment.query.get_or_404(comment_id)
 	comment.disabled = True
 	db.session.add(comment)
 	db.session.commit()
-	return redirect(url_for('.moderate',
-		page=request.args.get('page', 1, type=int)))
+	return redirect(url_for('.post', id=post_id))
 
 
-
-
-@main.route('/shutdown')
-def server_shutdown():
-	if not current_app.testing:
-		abort(404)
-	shutdown = request.environ.get('werkzeug.server.shutdown')
-	if not shutdown:
-		abort(500)
-	shutdown()
-	return "Shutting down..."
-
-@main.after_app_request
-def after_request(response):
-	for query in get_debug_queries():
-		if query.duration >= current_app.config['SLOW_DB_QUERY_TIME']:
-			current_app.logger.warning(
-				'Slow query: %s\nParameters: %s\nDuration: %f\nContext: %s\n' 
-				% (query.statement, query.parameters, query.duration, 
-					query.context))
-	return response
+# @main.route('/categories')
+# def categories():
+# 	categories = Category.query.all()
+# 	for category in categories:
+		
 

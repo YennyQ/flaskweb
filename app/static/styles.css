@@ -19,42 +19,57 @@ div.post-tabs ul.posts {
     border-top: none;
 }
 ul.posts li.post {
-    padding: 8px;
+    padding: 8px 15px;
+    margin: 0px 5px;
     border-bottom: 1px solid #e0e0e0;
 }
 ul.posts li.post:hover {
     background-color: #f0f0f0;
 }
-div.post-content {
-    margin-left: 48px;
-    min-height: 58px;
-}
-div.post-title {
-    font-weight: bold;
-}
-div.post-date {
+div#postlist-thumbnail {
     float: right;
 }
-div.post-thumbnail {
-    position: absolute;
+div#postlist-header {
+    margin: 4px 0px;
 }
-div.post-footer {
+div#postlist-content {
+    font-size: 130%;
+    margin: 4px 0px 4px 4px;
+}
+div#postlist-content a{    
+    color: #404040;
+}
+div#postlist-content a:hover{    
+    text-decoration: none;
+}
+div#postlist-footer {
+    color: #95999d;
+    font-size: 80%;
+}
+div#postlist-footer a{
+    color: #95999d;
+}
+div.post-category a{
+    text-decoration: none;
+}
+ul.list-group {
+    margin-left: 20px;
+}
+div.post-title {
+    text-align: center;
+}
+div.table {
+    display: table;
+    border-spacing: 5px;
+}
+div.right-row {
     text-align: right;
 }
 div.post-body {
-    margin: 16px 0px 0px 0px;
+    margin: 10px 50px;
 }
-table.post-header{
-    margin: 30px 0px 0px 0px;
-}
-div.post-header{
-    margin: 30px 0px 0px 0px;
-}
-div.view-post {
-    margin: 0 auto;
-}
-div.view-title{
-    text-align: center;
+div.comment-block {
+    margin-top: 50px;
 }
 ul.comments {
     list-style-type: none;
@@ -87,6 +102,9 @@ div.comment-content {
 }
 div.comment-form {
     margin: 16px 0px 16px 32px;
+}
+div.moderate-comment {
+    text-align: right;
 }
 div.pagination {
     width: 100%;

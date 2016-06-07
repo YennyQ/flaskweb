@@ -356,15 +356,16 @@ class Post(db.Model):
 	body = db.Column(db.Text)
 	body_html = db.Column(db.Text)
 	category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-	tags = db.relationship('Tag', secondary=post_tag_ref, 
-		backref=db.backref('post', lazy='dynamic'), lazy='dynamic')
+
 
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-	
+
+	disabled = db.Column(db.Boolean)
 
 	comments = db.relationship('Comment', backref='post', lazy='dynamic')
-
+	tags = db.relationship('Tag', secondary=post_tag_ref, 
+		backref=db.backref('post', lazy='dynamic'), lazy='dynamic')
 
 	def to_json(self):
 		json_post = {

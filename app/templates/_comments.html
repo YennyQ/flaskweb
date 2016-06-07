@@ -1,6 +1,6 @@
 <ul class="comments">
 	{% for comment in comments %}
-	<li class="comment">
+	<li class="comment" id="comment">
 		<div class="comment-thumbnail">
 			<a href="{{ url_for('.user', username=comment.author.username) }}">
 				<img class="img-rounded profile-thumbnail" src="{{ comment.author.gravatar(size=40) }}"/>
@@ -19,7 +19,7 @@
 				{% if comment.disabled %}
 				<p><i>此评论已被管理员删除。</i></p>
 				{% endif %}
-				{% if moderate or not comment.disabled %}
+				{% if current_user.can(Permission.MODERATE_COMMENTS) or not comment.disabled %}
 					{% if comment.body_html %}
 						{{ comment.body_html|safe}}
 					{% else %}
@@ -27,13 +27,15 @@
 					{% endif %}
 				{% endif %}
 			</div>
-			{% if moderate %}
+			{% if current_user.can(Permission.MODERATE_COMMENTS) %}
+			<div class="moderate-comment">
 				<br/>
-				{% if comment.disbaled %}
-				<a class="btn btn-default btn-xs" href="{{ url_for('.moderate_enable', id=comment.id, page=page) }}">恢复</a>
+				{% if comment.disabled %}
+				<a class="btn btn-primary btn-xs" href="{{ url_for('.comment_enable', post_id=post.id, comment_id=comment.id, page=page) }}">恢复</a>
 				{% else %}
-				<a class="btn btn-danger btn-xs" href="{{ url_for('.moderate_disable', id=comment.id, page=page) }}">删除</a>
+				<a class="btn btn-danger btn-xs" href="{{ url_for('.comment_disable', post_id=post.id, comment_id=comment.id, page=page) }}">删除</a>
 				{% endif %}
+			</div>
 			{% endif %}
 		</div>
 	</li>

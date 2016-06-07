@@ -1,55 +1,43 @@
 {% extends "bootstrap/base.html" %}
 
+{% block html_attribs %} lang="zh-CN" {% endblock html_attribs %}
+
 {% block title %}Flasky{% endblock %}
 
 
 {% block head %}
 {{ super() }}
+<meta charset="utf-8"/>
 <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
 <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}
 
 
-<!--navbar导航条-->
 {% block navbar %}
 <div class="navbar navbar-inverse" role="navigation">
-	<!--导航内容-->
 	<div class="container">
-		<!--header定义导航条首部-->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<span class="sr-only">Toggle navigation</span>
+			<span class="sr-only">Toggle Navigation</span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="/">Flasky</a>
 		</div>
-		<!--collapse定义导航菜单-->
+
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="/">主页</a></li>
 				<li><a href="/">分类</a></li>
 				<li><a href="{{ url_for('main.add_post') }}">添加文章</a></li>
-				<li><a href="/">about</a></li>
 			</ul>
-			<!--嵌套表单-->
-        	<!-- <form action="/" class="navbar-form navbar-left" role="search">
-            	<div class="form-group">
-            	<input type="text" class="form-control"></input>
-            	</div>
-            	<button type="button" class="btn btn-default">搜索</button>
-        	</form> -->
         	<ul class="nav navbar-nav navbar-right">
-        		{% if current_user.can(Permission.MODERATE_COMMENTS) %}
-        		<li><a href="{{ url_for('main.moderate') }}">管理评论</a></li>
-        		{% endif %}
         		{% if current_user.is_authenticated %}
         		<li class="dropdown">
-                	<a href="/" class="dropdown-toggle" data-toggle="dropdown">我的账户<b class="caret"></b>
+                	<a href="/" class="dropdown-toggle" data-toggle="dropdown">{{ current_user.username }}<b class="caret"></b>
                 	</a>
-                	<!--dropdowen menu下拉菜单选项-->
                 	<ul class="dropdown-menu">
                 		<li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
                 		<li>
@@ -59,12 +47,12 @@
                 			<a href="{{ url_for('auth.change_password') }}">修改密码</a>
                 		</li>
 						<li>
-							<a href="{{ url_for('auth.logout') }}">登出</a>
+							<a href="{{ url_for('auth.logout') }}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;登出</a>
 						</li>	
                 	</ul>
                 </li>
 				{% else %}
-				<li><a href="{{ url_for('auth.login') }}">登入</a></li>
+				<li><a href="{{ url_for('auth.login') }}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;&nbsp;登入</a></li>
 				{% endif %}
 			</ul>
 		</div>
@@ -82,16 +70,14 @@
 		{{ message }}
 	</div>
 	{% endfor %}
-	<!--页面内容-->
 	{% block page_content %}{% endblock %}
 </div>
 {% endblock %}
 
 
-<!--引入moment.js , jquery.js已经包含在Bootstrap，不用再引入-->
+<!--引入moment.js-->
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
-<!--默认英语，转换为汉语-->
 {{ moment.lang("zh-CN") }}
 {% endblock %}

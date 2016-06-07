@@ -5,32 +5,53 @@
 {% block title %}Flasky{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-	<h1>你好,
-	{% if current_user.is_authenticated %}
-		{{ current_user.username }}
-	{% else %}
-		陌生人
-	{% endif %}!
-	</h1>
-</div>
-
-
-<div class="post-tabs">
-	<ul class="nav nav-tabs">
-		<li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">全部文章</a></li>
+<div class="col-md-8">
+	<div class="page-header">
+		<h2>你好,
 		{% if current_user.is_authenticated %}
-		<li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_followed') }}">关注的文章</a></li>
-		{% endif %}
-	</ul>
-	{% include '_posts.html' %}
+		{{ current_user.username }}
+		{% else %}
+			陌生人
+		{% endif %}!
+		</h2>
+	</div>
+
+
+	<div class="post-tabs">
+		<ul class="nav nav-tabs">
+			<li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">全部文章</a></li>
+			{% if current_user.is_authenticated %}
+			<li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_followed') }}">关注的文章</a></li>
+			{% endif %}
+		</ul>
+		{% include '_posts.html' %}
+	</div>
+
+	{% if pagination %}
+	<div class="pagination">
+		{{ macros.pagination_widget(pagination, '.index') }}
+	</div>
+	{% endif %}
 </div>
 
-{% if pagination %}
-<div class="pagination">
-	{{ macros.pagination_widget(pagination, '.index') }}
+<div class="col-md-4">
+	 <div class="panel panel-default">
+	 	<div class="panel-heading">
+	 		<h4 class="panel-title"><span class="glyphicon glyphicon-grain" aria-hidden="true"></span>&nbsp;&nbsp;about</h4>
+	 	</div>
+	 	<div class="panel-body">
+	 		<ul class="list-group">
+	 			<li>前端Bootstrap</li>
+	 			<li>后端Python+Flask+SQLAlchemy+PostgreSQL</li>
+	 			<li>部署在Heroku</li>
+
+	 		</ul>
+	 		Contact
+	 		<ul class="list-group">
+	 			<li><a href="mailto:yanni_zh@yeah.net?subject=Flasky">yanni_zh@yeah.net</a></li>
+	 	</div>
+
 </div>
-{% endif %}
 {% endblock %}
 
 {% block scripts %}
