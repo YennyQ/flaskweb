@@ -59,7 +59,7 @@ def profile(length=25, profile_dir=None):
 @manager.command
 def deploy():
 	"""Run deployment tasks."""
-	from flask.ext.migrate import upgrade
+	from flask.ext.migrate import upgrade, revision
 	from app.models import Role, User, Category
 
 	db.create_all()
