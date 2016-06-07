@@ -70,7 +70,7 @@ def deploy():
 	
 	Role.insert_roles()
 
-	Role.admin_update()
+	User.admin_update()
 
 	User.add_self_follows()
 
