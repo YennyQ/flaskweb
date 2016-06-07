@@ -62,12 +62,10 @@ def deploy():
 	from flask.ext.migrate import upgrade, revision
 	from app.models import Role, User, Category
 
-	db.drop_all()
 	db.create_all()
 
 	revision()
 
-	
 	Role.insert_roles()
 
 	User.admin_update()
