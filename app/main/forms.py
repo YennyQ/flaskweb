@@ -55,7 +55,7 @@ class PostForm(BaseForm):
 	title = StringField(u'标题', validators=[Required()])
 	category = SelectField(u'分类', coerce=int)
 	tags = TagListField(u'标签', validators=[Required()])
-	body = TextAreaField(u'正文', validators=[Required()])
+	body = PageDownField(u'正文', validators=[Required()])
 	submit = SubmitField(u'发布')
 
 	def __init__(self, *args, **kwargs):

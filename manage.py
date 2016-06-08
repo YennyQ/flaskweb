@@ -60,7 +60,7 @@ def profile(length=25, profile_dir=None):
 def deploy():
 	"""Run deployment tasks."""
 	from flask.ext.migrate import upgrade, revision
-	from app.models import Role, User, Category
+	from app.models import Role, User, Category, Tag
 
 	db.create_all()
 
@@ -73,6 +73,8 @@ def deploy():
 	User.add_self_follows()
 
 	Category.create_categories()
+
+	Tag.create_tags()
 
 
 if __name__ == '__main__':
