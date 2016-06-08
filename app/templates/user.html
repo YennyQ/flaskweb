@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% import "_macros.html" as macros %}
 
-{% block title %}Flasky - {{ user.username }}{% endblock %}
+{% block title %}zzFlask - {{ user.username }}{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
 	<img class="img-rounded profile-thumbnail" src="{{ user.gravatar(size=256) }}">
 	<div class="profile-header">
-		<h1>{{ user.username }}</h1>
+		<h2>{{ user.username }}</h2>
 		{% if user.name or user.location %}
 		<p>
 			{% if user.name %}{{ user.name }}<br/>{% endif %}
@@ -61,11 +61,13 @@
 		</p>
 	</div>
 </div>
-<h3>{{ user.username }} 发表的文章</h3>
-{% include '_posts.html' %}
-{% if pagination %}
-<div class="pagination">
-	{{ macros.pagination_widget(pagination, '.user', username=user.username) }}
+<div id="profile-posts">
+	<h3>{{ user.username }} 发表的文章</h3>
+	{% include '_posts.html' %}
+	{% if pagination %}
+	<div class="pagination">
+		{{ macros.pagination_widget(pagination, '.user', username=user.username) }}
+	</div>
+	{% endif %}
 </div>
-{% endif %}
 {% endblock %}

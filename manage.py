@@ -66,6 +66,8 @@ def deploy():
 
 	revision()
 
+	upgrade()
+
 	Role.insert_roles()
 
 	User.admin_update()

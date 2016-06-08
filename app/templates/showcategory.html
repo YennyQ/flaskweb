@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}zzFlask - {{ title }}{% endblock %}
+
+{% block page_content %}
+<div>
+	<div class="page-header">
+		<h2>{{ title }}</h2>
+	</div>
+	<div class="show-category">
+		{% for category in categories %}
+		<div class="col-md-6">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<a href="{{ url_for('main.category', id=category.id) }}"><span id="more">more&gt;</span></a>
+					<h4 class="panel-title">{{ category.name }}</h4>
+					
+				</div>
+				<div class="panel-body">
+					<span>此类目共<em>{{ category.posts.count() }}</em> 篇文章，最新文章如下：</span>
+				</div>
+				<ul class="list-group" id="category-list">
+					{% for i in amount %}
+					<li class="list-group-item">
+					<a href="{{ url_for('main.post', id=category.posts[-i].id) }}"><b>{{ category.posts[-i].title }}</b></a> by <a href="{{ url_for('main.user', username=category.posts[-i].author.username) }}"><em>{{ category.posts[-i].author.username }}</em></a>
+					</li>
+					{% endfor %}
+					<li class="list-group-item"></li>
+				</ul>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %} 

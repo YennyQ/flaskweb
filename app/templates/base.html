@@ -2,7 +2,7 @@
 
 {% block html_attribs %} lang="zh-CN" {% endblock html_attribs %}
 
-{% block title %}Flasky{% endblock %}
+{% block title %}zzFlask{% endblock %}
 
 
 {% block head %}
@@ -24,13 +24,13 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">Flasky</a>
+			<a class="navbar-brand" href="/">zzFlask</a>
 		</div>
 
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li><a href="/">主页</a></li>
-				<li><a href="/">分类</a></li>
+				<li><a href="{{ url_for('main.categories') }}">分类</a></li>
 				<li><a href="{{ url_for('main.add_post') }}">添加文章</a></li>
 			</ul>
         	<ul class="nav navbar-nav navbar-right">

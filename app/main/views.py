@@ -275,9 +275,25 @@ def comment_disable(post_id, comment_id):
 	return redirect(url_for('.post', id=post_id))
 
 
-# @main.route('/categories')
-# def categories():
-# 	categories = Category.query.all()
-# 	for category in categories:
-		
+@main.route('/categories')
+def categories():
+	categories = Category.query.all()
+	# 要显示的文章数
+	amount = 3
+	return render_template('showcategory.html', categories=categories, 
+		amount=list(range(amount)), title=u'文章分类')
+
+@main.route('/categories/<int:id>')
+def category(id):
+	category = Category.query.filter_by(id=id).first()
+	title = category.name
+	categories = Category.query.all()
+	page = request.args.get('page', 1, type=int)
+	pagination = category.posts.order_by(Post.timestamp.desc()).paginate(
+		page, per_page=current_app.config['POSTS_PER_PAGE'],
+		error_out=False)
+	posts = pagination.items
+	return render_template('category.html', id=id, posts=posts, 
+		pagination=pagination, categories=categories, 
+		title=category.name)
 

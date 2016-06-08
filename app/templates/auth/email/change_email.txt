@@ -6,6 +6,6 @@ Dear {{ user.username }},
 
 来自，
 
-Flasky
+zzFlask
 
 提示: 请勿回复此邮件。

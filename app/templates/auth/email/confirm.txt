@@ -1,6 +1,6 @@
 Dear  {{ user.username  }},
 
-欢迎来到Flasky！
+欢迎来到zzFlask！
 
 请点击下面的链接确认您的账户：
 
@@ -8,6 +8,6 @@ Dear  {{ user.username  }},
 
 来自，
 
-Flasky
+zzFlask
 
 提示: 请勿回复此邮件。

@@ -2,7 +2,7 @@
 {% import "_macros.html" as macros %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Flasky - 文章 - {{ post.title }}{% endblock %}
+{% block title %}zzFlask - 文章 - {{ post.title }}{% endblock %}
 
 {% block page_content %}
 <div class="post">
@@ -36,23 +36,22 @@
 		{% endif %}
 	</div>
 	<div class="post-footer">
-		<a href="{{ url_for('.post', id=post.id) }}">
-			<span class="label label-default">链接</span>
-		</a>
-		<a href="{{ url_for('.post', id=post.id) }}#comments">
-			<span class="label label-default">
-				{{ post.comments.count() }} 评论
-			</span>
-		</a>
-		{% if current_user == post.author %}
-		<a href="{{ url_for('.edit_post', id=post.id) }}">
-			<span class="label label-primary">编辑</span>
-		</a>
-		{% elif current_user.is_administrator() %}
-		<a href="{{ url_for('.edit_post', id=post.id) }}">
-			<span class="label label-danger">编辑【管理员】</span>
-		</a>
-		{% endif %}
+		<div id="post-link">
+			<a href="{{ url_for('.post', id=post.id) }}">
+				<span class="glyphicon glyphicon-link"></span>
+			</a>&nbsp;
+		</div>
+		<div id="post-edit">
+			{% if current_user == post.author %}
+			<a href="{{ url_for('.edit_post', id=post.id) }}">
+				<span class="label label-primary"><span class="glyphicon glyphicon-pencil "></span>&nbsp;编辑</span>
+			</a>&nbsp;
+			{% elif current_user.is_administrator() %}
+			<a href="{{ url_for('.edit_post', id=post.id) }}">
+				<span class="label label-danger"><span class="glyphicon glyphicon-pencil "></span>&nbsp;管理</span>
+			</a>&nbsp;
+			{% endif %}
+		</div>
 	</div>
 </div>
 

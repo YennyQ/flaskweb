@@ -317,7 +317,7 @@ class Category(db.Model):
 	@staticmethod
 	def create_categories():
 		ctgs = [u'编程语言', u'Web开发', u'算法学习',
-		 u'硬件学习', u'Linux学习',u'其他']
+		 u'硬件学习', u'Linux学习', u'其他']
 		for c in ctgs:
 			ctg = Category.query.filter_by(name=c).first()
 			if ctg is None:

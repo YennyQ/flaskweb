@@ -1,11 +1,8 @@
 <ul class="posts">
 	{% for post in posts %}
 	<li class="post">
-		<div id="postlist-thumbnail">
-			<a href="{{ url_for('.user', username=post.author.username) }}">
-				<img class="img-rounded profile-thumbnail" src="{{ post.author.gravatar(size=40) }}"/>
-			</a>
-		</div>
+
+		{% if not id %}
 		<div id="postlist-header">
 			<div class="post-category">
 				<a href="/">
@@ -13,6 +10,7 @@
 				</a>
 			</div>
 		</div>
+		{% endif %}
 		<div id="postlist-content">
 			<div id="postlist-title">
 				<span><a href="{{ url_for('.post', id=post.id) }}">
@@ -29,6 +27,9 @@
 				<span>
 					{{ post.comments.count() }} 评论
 				</span>
+			</a>&nbsp;&nbsp;
+			<a href="{{ url_for('.post', id=post.id) }}">
+				<span class="glyphicon glyphicon-link"></span>
 			</a>
 		</div>
 

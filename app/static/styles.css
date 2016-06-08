@@ -52,6 +52,12 @@ div#postlist-footer a{
 div.post-category a{
     text-decoration: none;
 }
+div.post-footer a{
+    text-decoration: none;
+}
+div#post-link {
+    float: right;
+}
 ul.list-group {
     margin-left: 20px;
 }
@@ -66,7 +72,23 @@ div.right-row {
     text-align: right;
 }
 div.post-body {
-    margin: 10px 50px;
+    margin: 20px 50px;
+}
+div.show-category {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+span#more {
+    float: right;
+}
+ul#category-list {
+    line-height: 4px;
+}
+div#category-change {
+    position: fixed;
+    margin: 55px 100px 0px 0px;
+    font-weight: bold;
 }
 div.comment-block {
     margin-top: 50px;
