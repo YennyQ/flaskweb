@@ -6,7 +6,7 @@
 
 {% block page_content %}
 <div class="category">
-	<div class="col-md-2">
+	<div class="col-md-3">
 		<div id="category-change">
 		<ul class="nav nav-pills nav-stacked">
 			{% for category in categories %}
@@ -15,7 +15,7 @@
 		</ul>
 		</div>
 	</div>
-	<div class="col-md-10">
+	<div class="col-md-8">
 		<h2><span class="label label-info">{{ title }}</span></h2>
 		<div>
 			{% include '_posts.html' %}

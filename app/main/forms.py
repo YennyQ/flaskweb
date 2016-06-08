@@ -65,5 +65,6 @@ class PostForm(BaseForm):
 
 
 class CommentForm(BaseForm):
-	body = PageDownField('', validators=[Required()])
+	body = PageDownField(r'support<a>,<abbr>,<acronym>,<b>,<code>,<em>,<i>,<strong>', 
+		validators=[Required()])
 	submit = SubmitField(u'提交评论')

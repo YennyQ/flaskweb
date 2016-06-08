@@ -57,17 +57,32 @@
 
 
 <div class="comment-block">
-<h4 id="comments">评论</h4>
+<h4 id="comments">评论( {{ post.comments.count() }}条 )</h4>
 </div>
 {% if current_user.can(Permission.COMMENT) %}
 <div class="comment-form">
-	{{ wtf.quick_form(form) }}
+	<div class="input-comment">
+	{{ form.body(only_input=True, class="form-control", placeholder=form.body.label.text) }}
+	</div>
+	<div>
+	{{ form.body(only_preview=True)}}
+	</div>
+</div>
+{% else %}
+<div id="anonymous">
+	<a href="{{ url_for('auth.login') }}"><h4><span class="label label-default"> Sign In To Make a Comment </span></h4></a>
 </div>
 {% endif %}
 {% include '_comments.html' %}
+
 {% if pagination %}
 <div class="pagination">
 	{{ macros.pagination_widget(pagination, '.post', fragment='#comments', id=post.id) }}
 </div>
 {% endif %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
 {% endblock %}

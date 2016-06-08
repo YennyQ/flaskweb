@@ -5,6 +5,13 @@
     min-height: 260px;
     margin-left: 280px;
 }
+img#pikaqiu {
+    opacity:0.6;
+    filter:alpha(opacity=60);
+}
+div#login-relate {
+    text-align: center;
+}
 div.post-tabs {
     margin-top: 16px;
 }
@@ -90,6 +97,15 @@ div#category-change {
     margin: 55px 100px 0px 0px;
     font-weight: bold;
 }
+h4#comments {
+    font-weight: bold;
+}
+div#anonymous a {
+    text-decoration: none;
+}
+div.input-comment {
+
+}
 div.comment-block {
     margin-top: 50px;
 }
@@ -123,7 +139,10 @@ div.comment-content {
     min-height: 48px;
 }
 div.comment-form {
-    margin: 16px 0px 16px 32px;
+    margin: 20px 50px;
+}
+div.input-comment {
+    height: 65px;
 }
 div.moderate-comment {
     text-align: right;
@@ -160,5 +179,12 @@ div.flask-pagedown-preview h3 {
 .table.followers tr {
     border-bottom: 1px solid #e0e0e0;
 }
-
-
+.backpic {
+    background-image: url(/static/pikaqiu.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    
+}
