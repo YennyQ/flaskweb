@@ -17,6 +17,7 @@
 					<h4 class="panel-title">{{ category.name }}</h4>
 					
 				</div>
+				{% if category.posts.count() %}
 				<div class="panel-body">
 					<span>此类目共<em>{{ category.posts.count() }}</em> 篇文章，最新文章如下：</span>
 				</div>
@@ -28,6 +29,17 @@
 					{% endfor %}
 					<li class="list-group-item"></li>
 				</ul>
+				{% else %}
+				<div class="panel-body">
+					<span>此类目暂时没有相关文章</span>
+				</div>
+				<ul class="list-group" id="category-list">
+					{% for i in amount %}
+					<li class="list-group-item"></li>
+					{% endfor %}
+					<li class="list-group-item"></li>
+				</ul>
+				{% endif %}
 			</div>
 		</div>
 		{% endfor %}
