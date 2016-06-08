@@ -316,8 +316,8 @@ class Category(db.Model):
 
 	@staticmethod
 	def create_categories():
-		ctgs = [u'编程语言', u'Web开发', u'算法学习',
-		 u'硬件学习', u'Linux学习', u'其他']
+		ctgs = [u'编程语言', u'Web开发', u'数据结构与算法',
+		 u'硬件相关', u'操作系统', u'其他']
 		for c in ctgs:
 			ctg = Category.query.filter_by(name=c).first()
 			if ctg is None:
@@ -335,7 +335,7 @@ class Tag(db.Model):
 	@staticmethod
 	def create_tags():
 		ts = [u'Python', u'C语言', u'C++', u'flask',
-		u'http', u'Linux']
+		u'http', u'Linux', u'Unix']
 		for t in ts:
 			tag = Tag.query.filter_by(name=t).first()
 			if tag is None:

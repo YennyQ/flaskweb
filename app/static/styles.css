@@ -79,7 +79,7 @@ div.show-category {
     margin-left: auto;
     margin-right: auto;
 }
-span#more {
+div a span#more {
     float: right;
 }
 ul#category-list {

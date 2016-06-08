@@ -15,7 +15,6 @@
 				<div class="panel-heading">
 					<a href="{{ url_for('main.category', id=category.id) }}"><span id="more">more&gt;</span></a>
 					<h4 class="panel-title">{{ category.name }}</h4>
-					
 				</div>
 				{% if category.posts.count() %}
 				<div class="panel-body">
