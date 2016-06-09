@@ -93,7 +93,6 @@ ul#category-list {
     line-height: 4px;
 }
 div#category-change {
-    position: fixed;
     margin: 55px 100px 0px 0px;
     font-weight: bold;
 }
@@ -102,9 +101,6 @@ h4#comments {
 }
 div#anonymous a {
     text-decoration: none;
-}
-div.input-comment {
-
 }
 div.comment-block {
     margin-top: 50px;

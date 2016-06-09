@@ -21,7 +21,7 @@
 				{% endif %}
 				{% if current_user.can(Permission.MODERATE_COMMENTS) or not comment.disabled %}
 					{% if comment.body_html %}
-						{{ comment.body_html|safe}}
+						{{ comment.body_html|safe }}
 					{% else %}
 						{{ comment.body }}
 					{% endif %}
