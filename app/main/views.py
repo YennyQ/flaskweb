@@ -48,8 +48,14 @@ def index():
 		page, per_page=current_app.config['POSTS_PER_PAGE'],
 		error_out=False)
 	posts = pagination.items
-	return render_template('index.html', posts=posts, 
-		show_followed=show_followed, pagination=pagination)
+	amount = 5
+	comments = []
+	for i in range(amount):
+		comments.append(Comment.query.order_by(Comment.timestamp.desc())[i])
+	return render_template('index.html', posts=posts, Post=Post, 
+		amount=list(range(amount)), 
+		comments=comments, show_followed=show_followed, 
+		pagination=pagination)
 
 @main.route('/all')
 @login_required
@@ -69,12 +75,17 @@ def show_followed():
 def user(username):
 	user = User.query.filter_by(username=username).first_or_404()
 	page = request.args.get('page', 1, type=int)
-	pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
+	posts_pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
 		page, per_page=current_app.config['POSTS_PER_PAGE'],
 		error_out=False)
-	posts = pagination.items
-	return render_template('user.html', user=user, posts=posts, 
-		pagination=pagination)
+	posts = posts_pagination.items
+	comments_pagination = user.comments.order_by(Comment.timestamp.desc()
+		).paginate(page, per_page=current_app.config['COMMENTS_PER_PAGE'],
+		error_out=False)
+	comments = comments_pagination.items
+	return render_template('user.html', user=user, posts=posts, Post=Post,
+		posts_pagination=posts_pagination, comments=comments, 
+		comments_pagination=comments_pagination)
 
 @main.route('/edit_profile', methods=['GET','POST'])
 @login_required

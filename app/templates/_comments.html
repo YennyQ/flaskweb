@@ -1,20 +1,24 @@
 <ul class="comments">
 	{% for comment in comments %}
-	<li class="comment">
+	<li {% if post %}class="comment" {% else %}class="comment-noportrait"{% endif %}>
+		{% if post %}
 		<div class="comment-thumbnail">
 			<a href="{{ url_for('.user', username=comment.author.username) }}">
 				<img class="img-rounded profile-thumbnail" src="{{ comment.author.gravatar(size=40) }}"/>
 			</a>
 		</div>
-		<div class="comment-content">
-			<div class="comment-date">
+		{% endif %}
+		<div {% if post %}class="comment-content" {% endif %}>
+			<div class="comment-time">
 				{{ moment(comment.timestamp).fromNow() }}
 			</div>
+			{% if post %}
 			<div class="comment-author">
 				<a href="{{ url_for('.user', username=comment.author.username) }}">
 					{{ comment.author.username }}
 				</a>
 			</div>
+			{% endif %}
 			<div class="comment-body">
 				{% if comment.disabled %}
 				<p><i>此评论已被管理员删除。</i></p>
@@ -27,6 +31,30 @@
 					{% endif %}
 				{% endif %}
 			</div>
+			{% if not post %}
+				{% if amount %}	 
+				<div class="comment-post">
+					by
+					<a href="{{ url_for('.user', username=comment.author.username) }}">
+						{{ comment.author.username }}
+					</a>
+					in
+					<a href="{{ url_for('.post', id=comment.post_id) }}">
+						《{{ Post.query.filter_by(id=comment.post_id).first().title }}》
+					</a>
+				{% else %}
+				<div class="comment-post">
+					——
+					<a href="{{ url_for('.post', id=comment.post_id) }}">
+						《{{ Post.query.filter_by(id=comment.post_id).first().title }}》
+					</a>
+					by
+					<a href="{{ url_for('.user', username=Post.query.filter_by(id=comment.post_id).first().author) }}">
+						{{ Post.query.filter_by(id=comment.post_id).first().author.username }}
+					</a>
+				</div>
+				{% endif %}
+			{% endif %}
 			{% if current_user.can(Permission.MODERATE_COMMENTS) %}
 			<div class="moderate-comment">
 				<br/>

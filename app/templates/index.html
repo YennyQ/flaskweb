@@ -6,7 +6,7 @@
 
 {% block page_content %}
 <div class="col-md-8">
-	<div class="page-header backpic">
+	<div class="page-header">
 		<h2>Hello,
 		{% if current_user.is_authenticated %}
 		{{ current_user.username }}
@@ -36,8 +36,8 @@
 
 <div class="col-md-4">
 	 <div class="panel panel-default">
-	 	<div class="panel-heading">
-	 		<h4 class="panel-title"><span class="glyphicon glyphicon-grain" aria-hidden="true"></span>&nbsp;&nbsp;about</h4>
+	 	<div class="panel-heading"  id="my-panel1">
+	 		<h4 class="panel-title"><span class="glyphicon glyphicon-grain" aria-hidden="true"></span>&nbsp;&nbsp;About</h4>
 	 	</div>
 	 	<div class="panel-body">
 	 		<ul class="list-group">
@@ -45,13 +45,22 @@
 	 			<li>后端Python+Flask+SQLAlchemy+MySQL</li>
 	 			<li>部署在Heroku</li>
 	 			<li>Heroku默认数据库PostgreySQL</li>
-
 	 		</ul>
-	 		Contact
-	 		<ul class="list-group">
-	 			<li><a href="mailto:yanni_zh@yeah.net?subject=Flasky">yanni_zh@yeah.net</a></li>
+	 		Any Problem?<br/>
+	 		Click <a href="mailto:yanni_zh@yeah.net?subject=Flasky">Here</a> to Contact the Author by E-mail.
 	 	</div>
+	</div>
+</div>
 
+<div class="col-md-4">
+	 <div class="panel panel-default">
+	 	<div class="panel-heading"  id="my-panel2">
+	 		<h4 class="panel-title"><span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;Latest Comments</h4>
+	 	</div>
+	 	<div class="panel-body">
+	 		{% include '_comments.html' %}
+	 	</div>
+	</div>
 </div>
 {% endblock %}
 

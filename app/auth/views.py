@@ -2,6 +2,7 @@
 from flask import render_template, redirect, request, url_for, flash
 from flask.ext.login import login_user, logout_user, login_required, current_user
 from datetime import datetime
+from manage import app
 from . import auth
 from ..models import User
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm
@@ -42,7 +43,7 @@ def register():
 		db.session.add(user)
 		db.session.commit()
 		token = user.generate_confirmation_token()
-		send_email(user.email, u'确认你注册的【Flasky】的账户',
+		send_email(user.email, u'确认你注册的【zzFlask】的账户',
 			'auth/email/confirm',user=user, token=token)
 		flash(u"确认邮件已经发至您的邮箱，请查看！")
 		return redirect(url_for('main.index'))
@@ -55,6 +56,8 @@ def confirm(token):
 	if current_user.confirmed:
 		return redirect(url_for('main.index'))
 	if current_user.confirm(token):
+		send_email(app.config['FLASKWEB_ADMIN'], 'New User', 
+			'auth/email/new_user', user=user)
 		flash(u'你已经成功确认你的账户，谢谢！')
 	else:
 		flash(u'确认链接不合法或已经失效！')
@@ -82,7 +85,7 @@ def unconfirmed():
 @login_required
 def resend_confirmation():
 	token = current_user.generate_confirmation_token()
-	send_email(current_user.email, u'确认你注册的【Flasky】的账户',
+	send_email(current_user.email, u'确认你注册的【zzFlask】的账户',
 		'auth/email/confirm',user=current_user, token=token)
 	flash(u"确认邮件已经发至您的邮箱，请查看！")
 	return redirect(url_for('main.index'))

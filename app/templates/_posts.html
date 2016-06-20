@@ -7,8 +7,9 @@
 		{% if not id %}
 		<div id="postlist-header">
 			<div class="post-category">
+				<img src="/static/backimg-label.png">
 				<a href="{{ url_for('main.category', id=post.category.id) }}">
-					<span class="label label-info">{{ post.category.name }}</span>
+					<span class="label my-minlabel">{{ post.category.name }}</span>
 				</a>
 			</div>
 		</div>

@@ -5,9 +5,39 @@
     min-height: 260px;
     margin-left: 280px;
 }
-img#pikaqiu {
-    opacity:0.6;
-    filter:alpha(opacity=60);
+#my-navbar {
+    background-image: url(/static/backimg-nav.png);
+    padding: 20px;
+    height: 90px;
+}
+#my-panel1 {
+    background-image: url(/static/backimg-panel1.png);
+}
+#my-panel2 {
+    background-image: url(/static/backimg-panel2.png);
+}
+#my-panel3 {
+    background-image: url(/static/backimg-panel3.png);
+}
+li#my-act {
+    background-image: url(/static/backimg-act.png);
+}
+.backpic {
+    background-image: url(/static/backimg-back.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+span.my-minlabel {
+    color: #3f3f3f;
+    font-weight: bold;
+}
+span#my-label {
+    color: #0f0f0f;
+    font-size: 80%;
+    font-weight: bold;
 }
 div#login-relate {
     text-align: center;
@@ -68,6 +98,10 @@ div#post-link {
 ul.list-group {
     margin-left: 20px;
 }
+div.post {
+    background-image: url(/static/backimg-post.png);
+    background-position: center; 
+}
 div.post-title {
     text-align: center;
 }
@@ -115,17 +149,30 @@ ul.comments li.comment {
     padding: 8px;
     border-bottom: 1px solid #e0e0e0;
 }
-ul.comments li.comment:nth-child(1) {
+ul.comments li.comment-noportrait {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+ul.comments li:nth-child(1) {
     border-top: 1px solid #e0e0e0;
 }
-ul.comments li.comment:hover {
+ul.comments li:hover {
     background-color: #f0f0f0;
 }
-div.comment-date {
+div.comment-time {
     float: right;
+    font-size: 80%;
+}
+div.comment-post {
+    text-align: right;
+    font-size: 80%;
+    font-weight: bold;
 }
 div.comment-author {
     font-weight: bold;
+}
+div.comment-body {
+    clear: right;
 }
 div.comment-thumbnail {
     position: absolute;
@@ -134,6 +181,7 @@ div.comment-content {
     margin-left: 48px;
     min-height: 48px;
 }
+
 div.comment-form {
     margin: 20px 50px;
 }
@@ -163,6 +211,11 @@ div.flask-pagedown-preview h2 {
 div.flask-pagedown-preview h3 {
     font-size: 120%;
 }
+div#page-footer {
+    margin: 60px 0px;
+    font-variant: small-caps;
+    text-align: center;
+}
 .post-body h1 {
     font-size: 140%;
 }
@@ -174,13 +227,4 @@ div.flask-pagedown-preview h3 {
 }
 .table.followers tr {
     border-bottom: 1px solid #e0e0e0;
-}
-.backpic {
-    background-image: url(/static/pikaqiu.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: right;
-    opacity: 0.5;
-    filter: alpha(opacity=50);
-    
 }

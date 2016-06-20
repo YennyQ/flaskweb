@@ -25,10 +25,10 @@
 		<p>{{ user.about_me }}</p>
 		{% endif %}
 		<p>
-			注册日期 {{ moment(user.member_since).format('L') }}。
+			注册日期 {{ moment(user.member_since).format('L') }}
 		</p>
 		<p>
-			上次登录 {{ moment(user.last_seen).fromNow() }}。
+			上次登录 {{ moment(user.last_seen).fromNow() }}
 		</p>
 		<p>
 			{% if user == current_user %}
@@ -61,9 +61,19 @@
 		</p>
 	</div>
 </div>
-<div id="profile-posts">
+
+<div id="profile-posts" class="col-md-6">
 	<h3>{{ user.username }} 发表的文章</h3>
 	{% include '_posts.html' %}
+	{% if pagination %}
+	<div class="pagination">
+		{{ macros.pagination_widget(pagination, '.user', username=user.username) }}
+	</div>
+	{% endif %}
+</div>
+<div id="profile-posts" class="col-md-6">
+	<h3>{{ user.username }} 发表的评论</h3>
+	{% include '_comments.html' %}
 	{% if pagination %}
 	<div class="pagination">
 		{{ macros.pagination_widget(pagination, '.user', username=user.username) }}

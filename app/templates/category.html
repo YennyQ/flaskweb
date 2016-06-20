@@ -10,13 +10,13 @@
 		<div id="category-change">
 		<ul class="nav nav-pills nav-stacked">
 			{% for category in categories %}
-			<li role="presentation"{% if category.id==id %} class="active"{% endif %}><a href="{{ url_for('main.category', id=category.id) }}">{{ category.name }}</a></li>
+			<li role="presentation"{% if category.id==id %} id="my-act"{% endif %}><a href="{{ url_for('main.category', id=category.id) }}">{{ category.name }}</a></li>
 			{% endfor %}
 		</ul>
 		</div>
 	</div>
 	<div class="col-md-8">
-		<h2><span class="label label-info">{{ title }}</span></h2>
+		<h2 class="backpic"><span id="my-label">{{ title }}</span></h2>
 		<div>
 			{% include '_posts.html' %}
 		</div>

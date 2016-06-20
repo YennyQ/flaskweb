@@ -5,20 +5,20 @@
 
 {% block page_content %}
 <div>
-	<div class="page-header backpic">
+	<div class="page-header">
 		<h2>{{ title }}</h2>
 	</div>
 	<div class="show-category">
 		{% for category in categories %}
 		<div class="col-md-6">
-			<div class="panel panel-info">
-				<div class="panel-heading">
+			<div class="panel panel-default">
+				<div class="panel-heading" id="my-panel3">
 					<a href="{{ url_for('main.category', id=category.id) }}"><span id="more">more&gt;</span></a>
 					<h4 class="panel-title">{{ category.name }}</h4>
 				</div>
 				{% if category.posts.count() %}
 				<div class="panel-body">
-					<span>此类目共<em>{{ category.posts.count() }}</em> 篇文章，最新文章如下：</span>
+					<span>此分类共<em>{{ category.posts.count() }}</em> 篇文章，最新文章如下：</span>
 				</div>
 				<ul class="list-group" id="category-list">
 					{% for i in amount %}
@@ -30,7 +30,7 @@
 				</ul>
 				{% else %}
 				<div class="panel-body">
-					<span>此类目暂时没有相关文章</span>
+					<span>此分类暂时没有相关文章</span>
 				</div>
 				<ul class="list-group" id="category-list">
 					{% for i in amount %}

@@ -16,14 +16,15 @@
 				<span>by:<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>&nbsp;@&nbsp;{{ moment(post.timestamp).format('LLL') }}</span>
 			</div>
 			<div class="table-row">
-				<span class="table-cell label label-default">分类</span>
-				<span class="table-cell label label-info">{{ post.category.name }}</span>
+				<span class="table-cell label my-minlabel">分类</span>
+				<img src="/static/backimg-label.png">
+				<span class="table-cell label my-minlabel">{{ post.category.name }}</span>
 			</div>
 			<div class="table-row">
-				<span class="table-cell label label-default">标签</span>
+				<span class="table-cell label my-minlabel">标签</span>
+				<img src="/static/backimg-label.png">
 				{% for tag in post.tags %}
-				<span class="table-cell label label-warning">{{ tag.name }}</span>
-				&nbsp;
+				<span class="table-cell label my-minlabel">{{ tag.name }}</span>
 				{% endfor %}
 			</div>
 		</div>
@@ -74,7 +75,7 @@
 </form>
 {% else %}
 <div id="anonymous">
-	<a href="{{ url_for('auth.login') }}"><h4><span class="label label-default"> Sign In To Make a Comment </span></h4></a>
+	<a href="{{ url_for('auth.login') }}"><h4><span class="label my-minlabel"> <img src="/static/backimg-label.png">Sign In To Make a Comment<img src="/static/backimg-label.png"> </span></h4></a>
 </div>
 {% endif %}
 {% include '_comments.html' %}
