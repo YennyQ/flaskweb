@@ -153,6 +153,11 @@ ul.comments li.comment-noportrait {
     padding: 8px;
     border-bottom: 1px solid #e0e0e0;
 }
+ul.comments li#no-comment {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+}
 ul.comments li:nth-child(1) {
     border-top: 1px solid #e0e0e0;
 }

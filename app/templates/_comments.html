@@ -1,4 +1,9 @@
 <ul class="comments">
+{% if comments == None %}
+	<li id="no-comment">
+		暂时没有任何评论
+	</li>
+{% else %}
 	{% for comment in comments %}
 	<li {% if post %}class="comment" {% else %}class="comment-noportrait"{% endif %}>
 		{% if post %}
@@ -68,4 +73,5 @@
 		</div>
 	</li>
 	{% endfor %}
+{% endif %}
 </ul>

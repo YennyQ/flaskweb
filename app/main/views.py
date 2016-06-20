@@ -49,9 +49,12 @@ def index():
 		error_out=False)
 	posts = pagination.items
 	amount = 5
-	comments = []
-	for i in range(amount):
-		comments.append(Comment.query.order_by(Comment.timestamp.desc())[i])
+	if Comment.query.all():
+		comments = []
+		for i in range(amount):
+			comments.append(Comment.query.order_by(Comment.timestamp.desc())[i])
+	else:
+		comments = None
 	return render_template('index.html', posts=posts, Post=Post, 
 		amount=list(range(amount)), 
 		comments=comments, show_followed=show_followed, 
