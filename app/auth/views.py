@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, redirect, request, url_for, flash
+from flask import current_app, render_template, redirect, request, url_for, flash
 from flask.ext.login import login_user, logout_user, login_required, current_user
 from datetime import datetime
-from manage import app
 from . import auth
 from ..models import User
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm
@@ -56,7 +55,7 @@ def confirm(token):
 	if current_user.confirmed:
 		return redirect(url_for('main.index'))
 	if current_user.confirm(token):
-		send_email(app.config['FLASKWEB_ADMIN'], 'New User', 
+		send_email(current_app.config['FLASKWEB_ADMIN'], 'New User', 
 			'auth/email/new_user', user=user)
 		flash(u'你已经成功确认你的账户，谢谢！')
 	else:
