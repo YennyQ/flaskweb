@@ -27,7 +27,7 @@
 			&nbsp;
 			<a href="{{ url_for('.post', id=post.id) }}#comments">
 				<span>
-					{{ post.comments.count() }} 评论
+					{{ post.comments.count() }} {% if post.comments.count() %} comments {% else %} comment {% endif %}
 				</span>
 			</a>&nbsp;&nbsp;
 			<a href="{{ url_for('.post', id=post.id) }}">
