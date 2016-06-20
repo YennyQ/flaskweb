@@ -5,7 +5,7 @@ class Config:
 	SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
 	SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 	SQLALCHEMY_TRACK_MODIFICATIONS = True
-	MAIL_SUBJECT_PREFIX = u'[flasky]'
+	MAIL_SUBJECT_PREFIX = u'【zzFlask】'
 	MAIL_SENDER = os.environ.get('MAIL_SENDER')
 	FLASKWEB_ADMIN = os.environ.get('FLASKWEB_ADMIN')
 	MAIL_SERVER = 'smtp.qq.com'
@@ -14,8 +14,8 @@ class Config:
 	MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 	FOLLOWERS_PER_PAGE = 15
-	POSTS_PER_PAGE = 15
-	COMMENTS_PER_PAGE = 15
+	POSTS_PER_PAGE = 10
+	COMMENTS_PER_PAGE = 10
 	SQLALCHEMY_RECORD_QUERIES = True
 	SLOW_DB_QUERY_TIME = 0.5
 	SSL_DISABLE = True
