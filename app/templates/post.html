@@ -13,7 +13,7 @@
 	<div class="post-header">
 		<div class="table">
 			<div class="right-row">
-				<span>by:<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>&nbsp;/&nbsp;发表于{{ moment(post.timestamp).format('LL') }}</span>
+				<span>by:<a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>&nbsp;@&nbsp;{{ moment(post.timestamp).format('LLL') }}</span>
 			</div>
 			<div class="table-row">
 				<span class="table-cell label label-default">分类</span>
