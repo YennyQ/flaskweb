@@ -1,4 +1,9 @@
 <ul class="posts">
+{% if not posts %}
+	<li class="nothing">
+		暂时没有文章
+	</li>
+{% else %}
 	{% for post in posts %}
 	<li class="post">
 		<div id="postlist-thumbnail">
@@ -35,8 +40,7 @@
 				<span class="glyphicon glyphicon-link"></span>
 			</a>
 		</div>
-
-
 	</li>
 	{% endfor %}
+{% endif %}
 </ul>

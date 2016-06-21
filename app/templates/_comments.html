@@ -1,7 +1,7 @@
 <ul class="comments">
-{% if comments == None %}
-	<li id="no-comment">
-		暂时没有任何评论
+{% if not comments %}
+	<li class="nothing">
+		暂时没有评论
 	</li>
 {% else %}
 	{% for comment in comments %}

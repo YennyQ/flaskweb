@@ -79,12 +79,12 @@ def user(username):
 	user = User.query.filter_by(username=username).first_or_404()
 	page = request.args.get('page', 1, type=int)
 	posts_pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
-		page, per_page=current_app.config['POSTS_PER_PAGE'],
-		error_out=False)
+			page, per_page=current_app.config['POSTS_PER_PAGE'],
+			error_out=False)
 	posts = posts_pagination.items
 	comments_pagination = user.comments.order_by(Comment.timestamp.desc()
-		).paginate(page, per_page=current_app.config['COMMENTS_PER_PAGE'],
-		error_out=False)
+			).paginate(page, per_page=current_app.config['COMMENTS_PER_PAGE'],
+			error_out=False)
 	comments = comments_pagination.items
 	return render_template('user.html', user=user, posts=posts, Post=Post,
 		posts_pagination=posts_pagination, comments=comments, 

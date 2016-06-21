@@ -63,7 +63,7 @@
 </div>
 
 <div id="profile-posts" class="col-md-6">
-	<h3>{{ user.username }} 发表的文章</h3>
+	<div class="user-relate">{{ user.username }} 发表的文章</div>
 	{% include '_posts.html' %}
 	{% if pagination %}
 	<div class="pagination">
@@ -72,7 +72,7 @@
 	{% endif %}
 </div>
 <div id="profile-posts" class="col-md-6">
-	<h3>{{ user.username }} 发表的评论</h3>
+	<div class="user-relate">{{ user.username }} 发表的评论</div>
 	{% include '_comments.html' %}
 	{% if pagination %}
 	<div class="pagination">
@@ -80,4 +80,10 @@
 	</div>
 	{% endif %}
 </div>
+{% endblock %}
+
+<!--汉化-->
+{% block scripts %}
+{{ super() }}
+{{ moment.lang('zh-cn') }}
 {% endblock %}

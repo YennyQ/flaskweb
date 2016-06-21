@@ -56,7 +56,7 @@ def confirm(token):
 		return redirect(url_for('main.index'))
 	if current_user.confirm(token):
 		send_email(current_app.config['FLASKWEB_ADMIN'], 'New User', 
-			'auth/email/new_user', user=user)
+			'auth/email/new_user', user=current_user)
 		flash(u'你已经成功确认你的账户，谢谢！')
 	else:
 		flash(u'确认链接不合法或已经失效！')

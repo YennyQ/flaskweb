@@ -10,7 +10,7 @@
 		<div id="category-change">
 		<ul class="nav nav-pills nav-stacked">
 			{% for category in categories %}
-			<li role="presentation"{% if category.id==id %} id="my-act"{% endif %}><a href="{{ url_for('main.category', id=category.id) }}">{{ category.name }}</a></li>
+			<li role="presentation"{% if category.id==id %} class="act"{% endif %}><a href="{{ url_for('main.category', id=category.id) }}">{{ category.name }}</a></li>
 			{% endfor %}
 		</ul>
 		</div>

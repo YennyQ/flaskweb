@@ -19,9 +19,8 @@ class LoginForm(BaseForm):
 class RegistrationForm(BaseForm):
 	email = StringField(u'邮箱', validators = [Required(), Length(1, 64),
 		Email()])
-	username = StringField(u'用户名', validators = [Required(), 
-		Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
-		 u'用户名必须由字母、数字、下划线、点号组成')])
+	username = StringField(u'昵称', validators = [Required(), 
+		Length(1, 64)])
 	password = PasswordField(u'密码', validators = [Required(), 
 		EqualTo('password2', message = u'密码不一致')])
 	password2 = PasswordField(u'确认密码', validators = [Required()])
@@ -33,7 +32,7 @@ class RegistrationForm(BaseForm):
 
 	def validate_username(self, field):
 		if User.query.filter_by(username = field.data).first():
-			raise ValidationError(u'用户名已存在')
+			raise ValidationError(u'该昵称已存在')
 
 class ChangePasswordForm(BaseForm):
 	old_password = PasswordField(u'旧密码', validators = [Required()])

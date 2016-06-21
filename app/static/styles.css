@@ -5,30 +5,33 @@
     min-height: 260px;
     margin-left: 280px;
 }
+.user-relate {
+    font-size: 130%;
+    font-weight: bold;
+    background-image: url(/static/backimg-label.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
 #my-navbar {
     background-image: url(/static/backimg-nav.png);
-    padding: 20px;
-    height: 90px;
+    background-position: center;
 }
 #my-panel1 {
     background-image: url(/static/backimg-panel1.png);
+    background-position: center;
 }
 #my-panel2 {
     background-image: url(/static/backimg-panel2.png);
+    background-position: center;
 }
 #my-panel3 {
     background-image: url(/static/backimg-panel3.png);
+    background-position: center;
 }
-li#my-act {
+li.act {
     background-image: url(/static/backimg-act.png);
-}
-.backpic {
-    background-image: url(/static/backimg-back.png);
-    background-repeat: no-repeat;
-    background-size: contain;
     background-position: right;
-    opacity: 0.7;
-    filter: alpha(opacity=70);
+    background-repeat: no-repeat;
 }
 span.my-minlabel {
     color: #3f3f3f;
@@ -60,7 +63,7 @@ ul.posts li.post {
     margin: 0px 5px;
     border-bottom: 1px solid #e0e0e0;
 }
-ul.posts li.post:hover {
+ul.posts li:hover {
     background-color: #f0f0f0;
 }
 div#postlist-thumbnail {
@@ -153,8 +156,8 @@ ul.comments li.comment-noportrait {
     padding: 8px;
     border-bottom: 1px solid #e0e0e0;
 }
-ul.comments li#no-comment {
-    padding: 8px;
+li.nothing {
+    padding: 15px;
     border-bottom: 1px solid #e0e0e0;
     text-align: center;
 }
@@ -217,9 +220,11 @@ div.flask-pagedown-preview h3 {
     font-size: 120%;
 }
 div#page-footer {
-    margin: 60px 0px;
+    margin: 40px 0px;
+    padding: 20px;
     font-variant: small-caps;
     text-align: center;
+    border-top: 1px dashed #e0e0e0;; 
 }
 .post-body h1 {
     font-size: 140%;
