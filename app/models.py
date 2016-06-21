@@ -329,7 +329,7 @@ class Category(db.Model):
 class Tag(db.Model):
 	__tablename__ = 'tags'
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(128), unique=True)
+	name = db.Column(db.String(128), unique=True, nullable=False)
 
 
 	@staticmethod

@@ -61,7 +61,7 @@ def deploy():
 	"""Run deployment tasks."""
 	from flask.ext.migrate import upgrade, revision
 	from app.models import Role, User, Category, Tag
-	db.drop_all()
+
 	db.create_all()
 
 	upgrade()

@@ -6,7 +6,6 @@
 
 {% block page_content %}
 <div class="post">
-
 	<div class="post-title">
 		<h2>{{ post.title }}</h2>
 	</div>
@@ -36,25 +35,27 @@
 			{{ post.body }}
 		{% endif %}
 	</div>
-	<div class="post-footer">
-		<div id="post-link">
-			<a href="{{ url_for('.post', id=post.id) }}">
-				<span class="glyphicon glyphicon-link"></span>
-			</a>&nbsp;
-		</div>
-		<div id="post-edit">
-			{% if current_user == post.author %}
-			<a href="{{ url_for('.edit_post', id=post.id) }}">
-				<span class="label label-primary"><span class="glyphicon glyphicon-pencil "></span>&nbsp;编辑</span>
-			</a>&nbsp;
-			{% elif current_user.is_administrator() %}
-			<a href="{{ url_for('.edit_post', id=post.id) }}">
-				<span class="label label-danger"><span class="glyphicon glyphicon-pencil "></span>&nbsp;管理</span>
-			</a>&nbsp;
-			{% endif %}
-		</div>
+</div>
+	
+<div class="post-footer">
+	<div id="post-link">
+		<a href="{{ url_for('.post', id=post.id) }}">
+			<span class="glyphicon glyphicon-link"></span>
+		</a>&nbsp;
+	</div>
+	<div id="post-edit">
+		{% if current_user == post.author %}
+		<a href="{{ url_for('.edit_post', id=post.id) }}">
+			<span class="label label-primary"><span class="glyphicon glyphicon-pencil "></span>&nbsp;编辑</span>
+		</a>&nbsp;
+		{% elif current_user.is_administrator() %}
+		<a href="{{ url_for('.edit_post', id=post.id) }}">
+			<span class="label label-danger"><span class="glyphicon glyphicon-pencil "></span>&nbsp;管理</span>
+		</a>&nbsp;
+		{% endif %}
 	</div>
 </div>
+
 
 
 <div class="comment-block">
@@ -70,7 +71,7 @@
 		{{ form.body(only_preview=True)}}
 	</div>
 	<div class="form-group">
-		{{ form.submit() }}
+		{{ form.submit }}
 	</div>
 </form>
 {% else %}

@@ -16,24 +16,40 @@
 					<a href="{{ url_for('main.category', id=category.id) }}"><span id="more">more&gt;</span></a>
 					<h4 class="panel-title">{{ category.name }}</h4>
 				</div>
+				<!-- 如果分类有文章 -->
 				{% if category.posts.count() %}
 				<div class="panel-body">
 					<span>此分类共<em>{{ category.posts.count() }}</em> 篇文章，最新文章如下：</span>
 				</div>
 				<ul class="list-group" id="category-list">
-					{% for i in amount %}
-					<li class="list-group-item">
-					<a href="{{ url_for('main.post', id=category.posts[-i].id) }}"><b>{{ category.posts[-i].title }}</b></a> by <a href="{{ url_for('main.user', username=category.posts[-i].author.username) }}"><em>{{ category.posts[-i].author.username }}</em></a>
+					<!-- 如果分类的文章有三篇及以上 -->
+					{% if category.posts.count() > 2 %}
+						{% for i in range(amount) %}
+						<li class="list-group-item">
+						<a href="{{ url_for('main.post', id=category.posts[-i].id) }}"><b>{{ category.posts[-i].title }}</b></a> by <a href="{{ url_for('main.user', username=category.posts[-i].author.username) }}"><em>{{ category.posts[-i].author.username }}</em></a>
+						</li>
+						{% endfor %}
+					<!-- 不够三篇格式补齐 -->
+					{% else %}
+						{% for i in range(category.posts.count()) %}
+						<li class="list-group-item">
+						<a href="{{ url_for('main.post', id=category.posts[-i].id) }}"><b>{{ category.posts[-i].title }}</b></a> by <a href="{{ url_for('main.user', username=category.posts[-i].author.username) }}"><em>{{ category.posts[-i].author.username }}</em></a>
+						</li>
+						{% endfor %}
+						{% for i in range(amount-category.posts.count()) %}
+						<li class="list-group-item"></li>
+						{% endfor %}
+					{% endif %}
 					</li>
-					{% endfor %}
-					<li class="list-group-item"></li>
+					<li class="list-group-item"></li>			
 				</ul>
+				<!-- 没有文章查询失败 -->
 				{% else %}
 				<div class="panel-body">
 					<span>此分类暂时没有相关文章</span>
 				</div>
 				<ul class="list-group" id="category-list">
-					{% for i in amount %}
+					{% for i in range(amount) %}
 					<li class="list-group-item"></li>
 					{% endfor %}
 					<li class="list-group-item"></li>

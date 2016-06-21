@@ -56,7 +56,7 @@ def index():
 	else:
 		comments = None
 	return render_template('index.html', posts=posts, Post=Post, 
-		amount=list(range(amount)), 
+		amount=amount, 
 		comments=comments, show_followed=show_followed, 
 		pagination=pagination)
 
@@ -165,10 +165,13 @@ def edit_post(id):
 		post.title = form.title.data
 		post.body = form.body.data
 		post.category = Category.query.get(form.category.data)
-		for tag in post.tags.all():
-			post.tags.remove(tag)
-		for tag in form.tags.data:
-			post.tags.append(tag)
+		if form.tags.data:
+			for tag in post.tags.all():
+				post.tags.remove(tag)
+			for tag in form.tags.data:
+				post.tags.append(tag)
+		else:
+			form.tags.data = post.tags.all()
 		db.session.add(post)
 		db.session.commit()
 		flash(u'文章已更新。')
@@ -295,7 +298,7 @@ def categories():
 	# 要显示的文章数
 	amount = 3
 	return render_template('showcategory.html', categories=categories, 
-		amount=list(range(amount)), title=u'文章分类')
+		amount=amount, title=u'文章分类')
 
 @main.route('/categories/<int:id>')
 def category(id):

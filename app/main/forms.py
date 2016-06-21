@@ -53,8 +53,8 @@ class EditProfileAdminForm(BaseForm):
 
 class PostForm(BaseForm):
 	title = StringField(u'标题', validators=[Required()])
-	category = SelectField(u'分类', coerce=int)
-	tags = TagListField(u'标签', validators=[Required()])
+	category = SelectField(u'分类', coerce=int, validators=[Required()])
+	tags = TagListField(u'标签', validators=[Required(), Length(1, 64)])
 	body = PageDownField(u'正文', validators=[Required()])
 	submit = SubmitField(u'发布')
 
@@ -62,6 +62,8 @@ class PostForm(BaseForm):
 		super(PostForm, self).__init__(*args, **kwargs)
 		self.category.choices = [(category.id, category.name) 
 		for category in Category.query.order_by(Category.name).all()]
+		self.category.choices.insert(0, (0, u'请选择分类'))
+
 
 
 class CommentForm(BaseForm):
