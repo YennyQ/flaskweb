@@ -30,3 +30,8 @@
 </div>
 {% endblock %}
 
+<!--汉化-->
+{% block scripts %}
+{{ super() }}
+{{ moment.lang('zh-cn') }}
+{% endblock %}
