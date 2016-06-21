@@ -64,6 +64,7 @@ def deploy():
 
 	db.create_all()
 
+	db.upgrade()
 
 	Role.insert_roles()
 
