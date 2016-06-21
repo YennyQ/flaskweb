@@ -49,9 +49,10 @@ def index():
 		error_out=False)
 	posts = pagination.items
 	amount = 5
-	if Comment.query.all():
+	query = Comment.query.count()
+	if query:
 		comments = []
-		for i in range(amount):
+		for i in range(amount if query>amount else query):
 			comments.append(Comment.query.order_by(Comment.timestamp.desc())[i])
 	else:
 		comments = None

@@ -1,4 +1,5 @@
 <ul class="comments">
+<!-- 如果没有评论 -->
 {% if not comments %}
 	<li class="nothing">
 		暂时没有评论
@@ -6,10 +7,11 @@
 {% else %}
 	{% for comment in comments %}
 	<li {% if post %}class="comment" {% else %}class="comment-noportrait"{% endif %}>
+		<!-- 如果是在post页面 -->
 		{% if post %}
 		<div class="comment-thumbnail">
 			<a href="{{ url_for('.user', username=comment.author.username) }}">
-				<img class="img-rounded profile-thumbnail" src="{{ comment.author.gravatar(size=40) }}"/>
+				<img class="img-rounded" src="{{ comment.author.gravatar(size=40) }}"/>
 			</a>
 		</div>
 		{% endif %}
@@ -36,7 +38,9 @@
 					{% endif %}
 				{% endif %}
 			</div>
+			<!-- 如果不在post页面，即在列表里 -->
 			{% if not post %}
+				<!-- 在首页 -->
 				{% if amount %}	 
 				<div class="comment-post">
 					by

@@ -1,9 +1,13 @@
 .profile-thumbnail {
-    position: absolute;
+    padding: 45px 0px 10px 0px;
 }
-.profile-header {
-    min-height: 260px;
-    margin-left: 280px;
+.profile-content {
+    padding: 20px 10px;
+    margin-bottom: 70px;
+}
+.profile-list {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 20px;
 }
 .user-relate {
     font-size: 130%;
@@ -68,6 +72,8 @@ ul.posts li:hover {
 }
 div#postlist-thumbnail {
     float: right;
+    margin-right: 10px;
+    margin-top: 15px;
 }
 div#postlist-header {
     margin: 4px 0px;
