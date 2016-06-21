@@ -64,6 +64,7 @@
 				</div>
 				{% endif %}
 			{% endif %}
+			{% if post %}
 			{% if current_user.can(Permission.MODERATE_COMMENTS) %}
 			<div class="moderate-comment">
 				<br/>
@@ -73,6 +74,7 @@
 				<a class="btn btn-danger btn-xs" href="{{ url_for('.comment_disable', post_id=post.id, comment_id=comment.id, page=page) }}">删除</a>
 				{% endif %}
 			</div>
+			{% endif %}
 			{% endif %}
 		</div>
 	</li>
