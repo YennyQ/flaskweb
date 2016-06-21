@@ -58,7 +58,7 @@
 						《{{ Post.query.filter_by(id=comment.post_id).first().title }}》
 					</a>
 					by
-					<a href="{{ url_for('.user', username=Post.query.filter_by(id=comment.post_id).first().author) }}">
+					<a href="{{ url_for('.user', username=Post.query.filter_by(id=comment.post_id).first().author.username) }}">
 						{{ Post.query.filter_by(id=comment.post_id).first().author.username }}
 					</a>
 				</div>
