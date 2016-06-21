@@ -12,7 +12,7 @@
 		<p>
 			{% if user.name %}{{ user.name }}<br/>{% endif %}
 			{% if user.location %}
-				来自<a href="http://ditu.amap.com/search?query={{ user.location }}">{{ user.location }}</a>
+				现居<a href="http://ditu.amap.com/search?query={{ user.location }}">{{ user.location }}</a>
 			{% endif %}
 		</p>
 		{% endif %}
