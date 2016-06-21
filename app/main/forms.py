@@ -6,7 +6,7 @@ from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import Required, Length, Email, Regexp
 from wtforms import ValidationError
 from flask.ext.pagedown.fields import PageDownField
-from ..models import Role, User, Category
+from ..models import Role, User, Category, Post
 from ..extform import TagListField
 
 class BaseForm(Form):
@@ -63,6 +63,10 @@ class PostForm(BaseForm):
 		self.category.choices = [(category.id, category.name) 
 		for category in Category.query.order_by(Category.name).all()]
 		self.category.choices.insert(0, (0, u'请选择分类'))
+
+	def validate_title(self, field):
+		if Post.query.filter_by(title=field.data).first():
+			raise ValidationError(u'文章名不能重复')
 
 
 
