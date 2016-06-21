@@ -58,14 +58,16 @@ class PostForm(BaseForm):
 	body = PageDownField(u'正文', validators=[Required()])
 	submit = SubmitField(u'发布')
 
-	def __init__(self, *args, **kwargs):
+	def __init__(self, post, *args, **kwargs):
 		super(PostForm, self).__init__(*args, **kwargs)
 		self.category.choices = [(category.id, category.name) 
 		for category in Category.query.order_by(Category.name).all()]
 		self.category.choices.insert(0, (0, u'请选择分类'))
+		self.post = post
 
 	def validate_title(self, field):
-		if Post.query.filter_by(title=field.data).first():
+		if field.data != self.post.title and \
+		Post.query.filter_by(title=field.data).first():
 			raise ValidationError(u'文章名不能重复')
 
 

@@ -139,7 +139,7 @@ def edit_profile_admin(id):
 @main.route('/add_post', methods=['GET', 'POST'])
 @login_required
 def add_post():
-	form = PostForm()
+	form = PostForm(post=None)
 	if form.validate_on_submit():
 		post = Post(title=form.title.data, body=form.body.data, 
 			author=current_user._get_current_object())
@@ -161,7 +161,7 @@ def edit_post(id):
 	if current_user != post.author and \
 	not current_user.can(Permission.ADMINISTER):
 		abort(403)
-	form = PostForm()
+	form = PostForm(post=post)
 	if form.validate_on_submit():
 		post.title = form.title.data
 		post.body = form.body.data
